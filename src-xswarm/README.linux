@@ -1,0 +1,8 @@
+This was an easy one. I put SIGBUS, SIGSYS and SIGXCPU within #ifdef's,
+xmkmf, make, done!
+
+building:
+
+  gcc -s -o xswarm xswarm.a -lX11
+
+Rob Hooft (hooft@hutruu54.bitnet, hooft@chem.ruu.nl)

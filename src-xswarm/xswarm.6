@@ -1,0 +1,210 @@
+.TH XSWARM 6 "January 30, 1991"
+.UC 4
+.SH NAME
+Xswarm Version 2.2 \- X11 animated toy
+.SH SYNOPSIS
+.B xswarm
+.B \[\-hq?vprVx\]
+.B \[\-t
+.I timeout\]
+.B \[\-D
+.I delay\]
+.B \[\-g
+.I geometry\]
+.B \[\-d
+.I host:display\]
+.B \[\-b
+.I bees\]
+.B \[\-a
+.I bee-acceleration\]
+.B \[\-s
+.I bee-velocity\]
+.B \[\-A
+.I wasp-acceleration\]
+.B \[\-S
+.I wasp-velocity\]
+.B \[\-B
+.I border-width\]
+.B \[\-w
+.I wasp-color\]
+.B \[\-c
+.I bee-color\]
+.B \[\-C
+.I background-color\]
+.SH DESCRIPTION
+.I Xswarm
+is an X11 client that animates a group of line segments.  One line is
+called the wasp and the others are the bees.  The bees constantly accelerate 
+toward the wasp, forming a cute pattern that continually changes.  Because
+.I Xswarm
+is commonly left running in the root window, it was made possible to control
+how much cpu time it uses with the -d option.
+.LP
+If a mouse button is pressed while the pointer is in the xswarm window,
+the wasp becomes controlled by the mouse.  Control is released when the
+mouse button is pressed again.  To kill
+.I Xswarm
+, press q in it's window.
+.LP
+The parameters that affect behavior of the swarm are controllable by the user
+through command line parameters.  Some of the niftier features are controlling
+the wasp with the mouse, putting it in the root window, using it as a screen
+saver, and making the swarm fly "above" a background bitmap.
+.LP
+After playing with
+.I Xswarm
+interactively, one of it's common uses is in the root
+window where it helps break the monotony of X.  When putting it there, don't
+forget to play with the -V and -x options!
+.LP
+One of the recently added capabilities of
+.I Xswarm
+is screen saving.  If a non-zero timeout is given with the -t option, the
+screen will be cleared after the given amount of idle time and the swarm will
+animate until a key is pressed or the mouse is moved.  As far as I know,
+this is the first example of an
+.I X
+screen saver other than the one built into the server.  By screen saver, I
+mean a program that does not require a signal from the user to take over the
+screen.
+.PP
+.SH OPTIONS
+.I Xswarm
+has the following options:
+.TP
+.B "\-h, \-q, \-?"
+Display usage message and exit.
+.TP
+.B "-v"
+Display verbose information about the current settings.
+.TP
+.B "-p"
+Use the mouse (pointer) button to control the wasp.  This can be turned on
+and off at any time by pressing a button in the window.
+.TP
+.B "-r"
+Use root window.
+.TP
+.B "-V"
+Stay in the clear area of the root window.  (Only useful with -r.)
+.TP
+.B "-x"
+Use xor raster operation so that the bees don't destroy the root bitmap.
+(Only useful with -r.)
+.TP
+.BI \-t " timeout"
+This is the number of seconds of idle time to wait before clearing the
+screen.  The idle swarm disappears when a key is pressed or the mouse is
+moved.
+.TP
+.BI \-D " delay"
+This is the non-blocking delay between frames. (in milliseconds)
+.TP
+.BI \-g " geometry"
+like -g 500x450+100+200
+.TP
+.BI \-d " host:display"
+like -d spacsun:0.0 or -d unix:0.0
+.TP
+.BI \-b " bees"
+This is the number of bees that will be flying around.
+.TP
+.BI \-a " bee-acceleration"
+This is measured in pixels per frame per frame. (try 2-10)
+.TP
+.BI \-s " bee-velocity"
+This is measured in pixels per frame. (try 5-20)
+.TP
+.BI \-A " wasp-acceleration"
+This is measured in pixels per frame per frame. (try 2-10)
+.TP
+.BI \-S " wasp-velocity"
+This is measured in pixels per frame. (try 5-20)
+.TP
+.BI \-w " wasp-color"
+One of the colors in .../lib/X11/rgb.txt or a color of the form #rrggbb in
+hexadecimal.  For instance, #ef9595 is sort of a flesh tone.  r stands for red,
+g stands for green, and b stands for blue.
+.TP
+.BI \-c " bee-color"
+.TP
+.BI \-C " background-color"
+If you are using -x, then you may have to twiddle with this color in order
+to get the bees to show up.  (-x works well with black and white)
+.SH EXAMPLES
+For a swarm that doesn't stick so tightly to the wasp, try a larger
+speed limit for the bees, like this...
+.LP
+xswarm -s 16
+.LP
+For a wasp that gets away more often, give the wasp a higher speed limit
+and better acceleration, like this...
+.LP
+xswarm -A 7 -S 20
+.LP
+To put the swarm in you background without harming your root bitmap,
+do this...
+.LP
+xswarm -r -x -V
+.LP
+You may need to fiddle with -w, -c, and -C to make the swarm visible...
+.LP
+xswarm -r -x -V -w red -c blue -C green
+.LP
+To speed up the swarm, decrease the delay between frames...
+.LP
+xswarm -D 10  (Try taking control with the mouse button.)
+.LP
+To use xswarm as a screen saver, put a line like this in your X startup
+script...
+.LP
+xswarm -t 300 -w red -c blue
+.LP
+.SH BUGS
+I still haven't gotten backing store to work perfectly in the root window
+with the xor raster operation.  Occasionally, the swarm leaves a semi-permanent
+mark on the root window.  If anyone is interested in fixing up any part of
+xswarm, then please feel free, but I would like a copy of the changes.
+.LP
+Please let me know if you have any problems with the screen saver
+feature.  It seems to work just fine on the Sun-4's that I use, but it
+occasionally flakes out on the DecStation 3100's.
+.SH MISCELLANEOUS RAMBLINGS
+Implementing the screen saver feature took alot of thinking.  I would be
+.I VERY
+interested in hearing of any other schemes for detecting user inactivity.
+The way I did it seems a little messy to me, but here it is.  Initially,
+I traverse the entire window hierarchy.  As I get to each window, I do an
+XSelectInput() on it.  Then when I want to watch for user activity, I
+increment a timer and check for events.  If there are any events, then I
+zero the timer.  If the timer exceeds whatever the timeout is, then I toss
+up the screen saver window.  Does anyone have better ideas on how to watch
+for user activity in ALL windows other than the way I described?
+.LP
+I admit that I've gotten many ideas from public domain software, but I've
+tried to give credit to the original authors at least in the documentation.
+If you use any part of xswarm or the swarm animation algorithm, then please
+include my name in your man page/documentation somewhere.
+.SH AUTHOR
+Xswarm's author is Jeff Butterworth (butterwo@cs.unc.edu).
+.LP
+Looking at the source code to
+.I psychoII
+helped me learn how to open a window.
+Taking over the screen was surprisingly simple once I looked at the source
+code for
+.I meltdown
+written by Dave Lemke (lemke@ncd.com).
+The following people have helped immensely with bug fixes and suggestions:
+.TP
+.nf
+\ \ 
+David Elliott: tips for SYSV nap() and the sizehints structure
+Karl Fox: improved the backing store problem
+Arne Helme: fixed "nap" function for HP machines
+Casey Leedom: supplied a simple imakefile and man page
+Rob Nelson: added correct resizing
+Andreas ?Stolcke?: fixed -g option, added virtual root
+Bill Trost: explained the race condition in nap(), added mouse control
+Jon Webb: bouncing against windows while in the root window
+.fi

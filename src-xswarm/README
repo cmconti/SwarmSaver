@@ -1,0 +1,24 @@
+This program animates a bunch of little line segments chasing a randomly
+accelerating line segment.  The concept is simple, but the effect is pretty
+cute.  By default, it comes up in a window, but it can be put in the root
+window too.  In order to make it usable as a screen background, you can
+alter the delay between updates, making it use very little cpu time.  One of
+the reasons why it doesn't use much cpu time is that it only uses integer
+arithmetic.
+
+This program has been tested successfully on a Sun4's, DECStation 3100's,
+and DECStation 5000's.
+
+The only thing you will probably have to change in the Makefile is the
+location of X include files.
+
+Try xswarm -h for help.  Fiddle with the parameters.  You can get really
+different effects!
+
+
+Jeff Butterworth
+
+Home:   100-G Misty Woods Cir., Chapel Hill, NC 27514  (919) 967-7359
+School: 235 Sitterson, UNC-Chapel Hill, NC 27599  (919) 962-1719
+	butterwo@cs.unc.edu
+

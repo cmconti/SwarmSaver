@@ -1,0 +1,7 @@
+IMAKE_DEFINES= -DManSuffix=6
+
+DEFINES = -DX11R4
+DEPLIBS = $(DEPXLIB)
+LOCAL_LIBRARIES = $(XLIB)
+
+SimpleProgramTarget(xswarm)
