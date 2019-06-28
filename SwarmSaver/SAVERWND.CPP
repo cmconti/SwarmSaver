@@ -47,8 +47,13 @@ END_MESSAGE_MAP()
 
 BOOL CSaverWnd::Create() 
 {
-	CRect rect(0, 0, ::GetSystemMetrics(SM_CXSCREEN),
-		::GetSystemMetrics(SM_CYSCREEN));
+	//CRect rect(0, 0, ::GetSystemMetrics(SM_CXSCREEN),
+	//	::GetSystemMetrics(SM_CYSCREEN));
+	CRect rect;
+	rect.left = ::GetSystemMetrics(SM_XVIRTUALSCREEN);
+	rect.top = ::GetSystemMetrics(SM_YVIRTUALSCREEN);
+	rect.right = rect.left + ::GetSystemMetrics(SM_CXVIRTUALSCREEN);
+	rect.bottom = rect.top + ::GetSystemMetrics(SM_CYVIRTUALSCREEN);
 
 	return CSwarmWindow::Create(WS_EX_TOPMOST, WS_VISIBLE|WS_POPUP, rect, NULL, 
 		0, NULL);

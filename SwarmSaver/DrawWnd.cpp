@@ -24,7 +24,6 @@ LPCTSTR CSwarmWindow::m_lpszClassName = NULL;
 CSwarmWindow::CSwarmWindow(bool bPreview /*= false*/) : m_BkBrush(RGB(0,0,0)), m_WaspColor(RGB(255,255,255)),
 m_BeeColor(RGB(254,254,0)), m_OldBeeColor(RGB(254, 254, 0)), m_BlackPen(PS_SOLID, 1, COLORREF(0))
 {
-    m_bEscapeToScreen = FALSE;
     m_AnimateID = 0;
     m_ColorID = 0;
     m_ClearID = 0;
@@ -61,13 +60,13 @@ CSwarmWindow::~CSwarmWindow()
 
 
 BEGIN_MESSAGE_MAP(CSwarmWindow, CWnd)
-	//{{AFX_MSG_MAP(CSwarmWindow)
-	ON_WM_ERASEBKGND()
-	ON_WM_SIZE()
-	ON_WM_CREATE()
-	ON_WM_TIMER()
-	ON_WM_DESTROY()
-	//}}AFX_MSG_MAP
+    //{{AFX_MSG_MAP(CSwarmWindow)
+    ON_WM_ERASEBKGND()
+    ON_WM_SIZE()
+    ON_WM_CREATE()
+    ON_WM_TIMER()
+    ON_WM_DESTROY()
+    //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -75,12 +74,12 @@ END_MESSAGE_MAP()
 
 int CSwarmWindow::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
-	if (CWnd::OnCreate(lpCreateStruct) == -1)
-		return -1;
-	
+    if (CWnd::OnCreate(lpCreateStruct) == -1)
+        return -1;
+
     Initialize();
 
-	return 0;
+    return 0;
 }
 
 void CSwarmWindow::Initialize()
@@ -104,21 +103,13 @@ void CSwarmWindow::SetSizeData()
     GetClientRect(&rectWin);
     ClientToScreen(&rectWin);
 
-    if (m_bEscapeToScreen)
-    {
-        m_Width = ::GetSystemMetrics(SM_CXSCREEN);
-        m_Height = ::GetSystemMetrics(SM_CYSCREEN);
-    }
-    else
-    {
-        m_Width = rectWin.Width();
-        m_Height = rectWin.Height();
-    }
+    m_Width = rectWin.Width();
+    m_Height = rectWin.Height();
 }
 
 void CSwarmWindow::OnSize(UINT nType, int cx, int cy) 
 {
-	CWnd::OnSize(nType, cx, cy);
+    CWnd::OnSize(nType, cx, cy);
 
     SetSizeData();
 }
@@ -127,22 +118,22 @@ BOOL CSwarmWindow::OnEraseBkgnd(CDC* pDC)
 {
     // Save the old brush
     CBrush* pOldBrush = (CBrush*)pDC->SelectObject(&m_BkBrush);
- 
+
     // Get the current clipping boundary
     CRect rect;
     GetClientRect(&rect);
- 
+
     // Erase the area needed
     pDC->PatBlt(rect.left, rect.top, rect.Width(), rect.Height(),
-         PATCOPY);
- 
+        PATCOPY);
+
     pDC->SelectObject(pOldBrush); // Select the old brush back
     return FALSE;  // message handled
 }
 
 void CSwarmWindow::OnDestroy() 
 {
-	KillTimer(m_AnimateID);
+    KillTimer(m_AnimateID);
     KillTimer(m_ColorID);
 
     free(m_psegPoints);
@@ -153,7 +144,7 @@ void CSwarmWindow::OnDestroy()
     free(xv);
     free(yv);
 
-	CWnd::OnDestroy();	
+    CWnd::OnDestroy();	
 }
 void CSwarmWindow::Find95Desktop()
 {
@@ -205,8 +196,7 @@ void CSwarmWindow::OnTimer(UINT nIDEvent)
         {
             POINT mousept;
             GetCursorPos(&mousept);
-            if (!m_bEscapeToScreen)
-                ScreenToClient(&mousept);
+            ScreenToClient(&mousept);
             wasp_x[0] = mousept.x;
             wasp_y[0] = mousept.y;
 
@@ -221,7 +211,7 @@ void CSwarmWindow::OnTimer(UINT nIDEvent)
             }
             if (wasp_y[0] < m_border)
             {
-		        wasp_y[0] = m_border;
+                wasp_y[0] = m_border;
             }
             if (wasp_y[0] > m_Height-m_border-1)
             {
@@ -249,15 +239,15 @@ void CSwarmWindow::OnTimer(UINT nIDEvent)
             // Bounce Checks
             if ((wasp_x[0] < m_border) || (wasp_x[0] > m_Width-m_border-1))
             {
-	            wasp_xvel = -wasp_xvel;
-	            wasp_x[0] += wasp_xvel<<1;
+                wasp_xvel = -wasp_xvel;
+                wasp_x[0] += wasp_xvel<<1;
             }
             if ((wasp_y[0] < m_border) || (wasp_y[0] > m_Height-m_border-1))
             {
-    	        wasp_yvel = -wasp_yvel;
+                wasp_yvel = -wasp_yvel;
                 wasp_y[0] += wasp_yvel<<1;
             }
-/*
+            /*
             //move the target
             // Accelerate
             wasp_target_xvel += RAND(m_wasp_acc);
@@ -277,23 +267,23 @@ void CSwarmWindow::OnTimer(UINT nIDEvent)
             // Bounce Checks
             if ((wasp_target_x[0] < m_border*2) || (wasp_target_x[0] > m_Width-(m_border*2)-1))
             {
-	            wasp_target_xvel = -wasp_target_xvel;
-	            wasp_target_x[0] += wasp_target_xvel<<1;
+            wasp_target_xvel = -wasp_target_xvel;
+            wasp_target_x[0] += wasp_target_xvel<<1;
             }
             if ((wasp_target_y[0] < m_border*2) || (wasp_target_y[0] > m_Height-(m_border*2)-1))
             {
-    	        wasp_target_yvel = -wasp_target_yvel;
-                wasp_target_y[0] += wasp_target_yvel<<1;
+            wasp_target_yvel = -wasp_target_yvel;
+            wasp_target_y[0] += wasp_target_yvel<<1;
             }
 
             //move the wasp
-	        // Accelerate
-	        dx = wasp_target_x[1] - wasp_x[1];
-	        dy = wasp_target_y[1] - wasp_y[1];
-	        distance = abs(dx)+abs(dy); // approximation
-	        if (distance == 0) distance = 1;
-	        wasp_xvel += (dx*m_wasp_acc)/distance;
-	        wasp_yvel += (dy*m_wasp_acc)/distance;
+            // Accelerate
+            dx = wasp_target_x[1] - wasp_x[1];
+            dy = wasp_target_y[1] - wasp_y[1];
+            distance = abs(dx)+abs(dy); // approximation
+            if (distance == 0) distance = 1;
+            wasp_xvel += (dx*m_wasp_acc)/distance;
+            wasp_yvel += (dy*m_wasp_acc)/distance;
 
             // Speed Limit Checks
             if (wasp_xvel > m_wasp_vel) wasp_xvel = m_wasp_vel;
@@ -304,49 +294,49 @@ void CSwarmWindow::OnTimer(UINT nIDEvent)
             // Move 
             wasp_x[0] = wasp_x[1] + wasp_xvel;
             wasp_y[0] = wasp_y[1] + wasp_yvel;
-*/        }
+            */        }
 
-	    /* Don't let things settle down. */
-	    xv[rand() % m_Numbees] += RAND(m_bee_acc + m_bee_acc/2);
-	    yv[rand() % m_Numbees] += RAND(m_bee_acc + m_bee_acc/2);
+        /* Don't let things settle down. */
+        xv[rand() % m_Numbees] += RAND(m_bee_acc + m_bee_acc/2);
+        yv[rand() % m_Numbees] += RAND(m_bee_acc + m_bee_acc/2);
 
-	    /* <=- Bees -=> */
-	    for (int b = 0 ; b < m_Numbees ; b++)
-	    {
-	        /* Age the arrays. */
-	        X(2,b) = X(1,b);
-	        X(1,b) = X(0,b);
-	        Y(2,b) = Y(1,b);
-	        Y(1,b) = Y(0,b);
+        /* <=- Bees -=> */
+        for (int b = 0 ; b < m_Numbees ; b++)
+        {
+            /* Age the arrays. */
+            X(2,b) = X(1,b);
+            X(1,b) = X(0,b);
+            Y(2,b) = Y(1,b);
+            Y(1,b) = Y(0,b);
 
-	        /* Accelerate */
-	        dx = wasp_x[1] - X(1,b);
-	        dy = wasp_y[1] - Y(1,b);
-	        distance = abs(dx)+abs(dy); /* approximation */
-	        if (distance == 0) distance = 1;
-	        xv[b] += (dx*m_bee_acc)/distance;
-	        yv[b] += (dy*m_bee_acc)/distance;
+            /* Accelerate */
+            dx = wasp_x[1] - X(1,b);
+            dy = wasp_y[1] - Y(1,b);
+            distance = abs(dx)+abs(dy); /* approximation */
+            if (distance == 0) distance = 1;
+            xv[b] += (dx*m_bee_acc)/distance;
+            yv[b] += (dy*m_bee_acc)/distance;
 
-	        /* Speed Limit Checks */
-	        if (xv[b] > m_bee_vel) xv[b] = m_bee_vel;
-	        if (xv[b] < -m_bee_vel) xv[b] = -m_bee_vel;
-	        if (yv[b] > m_bee_vel) yv[b] = m_bee_vel;
-	        if (yv[b] < -m_bee_vel) yv[b] = -m_bee_vel;
+            /* Speed Limit Checks */
+            if (xv[b] > m_bee_vel) xv[b] = m_bee_vel;
+            if (xv[b] < -m_bee_vel) xv[b] = -m_bee_vel;
+            if (yv[b] > m_bee_vel) yv[b] = m_bee_vel;
+            if (yv[b] < -m_bee_vel) yv[b] = -m_bee_vel;
 
-	        /* Move */
-	        X(0,b) = X(1,b) + xv[b];
-	        Y(0,b) = Y(1,b) + yv[b];
+            /* Move */
+            X(0,b) = X(1,b) + xv[b];
+            Y(0,b) = Y(1,b) + yv[b];
 
-	        /* Fill the segment lists. */
-	        segs[b*2].x = X(0,b);
-	        segs[b*2].y = Y(0,b);
-	        segs[b*2 + 1].x = X(1,b);
-	        segs[b*2 + 1].y = Y(1,b);
-	        old_segs[b*2].x = X(1,b);
-	        old_segs[b*2].y = Y(1,b);
-	        old_segs[b*2 + 1].x = X(2,b);
-	        old_segs[b*2 + 1].y = Y(2,b);
-	    }
+            /* Fill the segment lists. */
+            segs[b*2].x = X(0,b);
+            segs[b*2].y = Y(0,b);
+            segs[b*2 + 1].x = X(1,b);
+            segs[b*2 + 1].y = Y(1,b);
+            old_segs[b*2].x = X(1,b);
+            old_segs[b*2].y = Y(1,b);
+            old_segs[b*2 + 1].x = X(2,b);
+            old_segs[b*2 + 1].y = Y(2,b);
+        }
 
         DrawData();
 
@@ -411,35 +401,21 @@ void CSwarmWindow::DrawData(bool bEraseOnly /*= false*/)
     if (m_hWnd != NULL)
     {
         HDC hdcScreen = NULL;
-    
-        CDC* pDC;
-        if (m_bEscapeToScreen)
-        {
-            hdcScreen = ::GetDC(m_hWndExplorer);
-            pDC = (CDC::FromHandle(hdcScreen));
-        }
-        else
-        {
-            pDC = new CWindowDC(this);
-        }
-    
-        int rop2;
-        if (m_bEscapeToScreen)
-            rop2 = pDC->SetROP2(R2_XORPEN);
-    
+
+        CDC* pDC = new CWindowDC(this);
+
         CPen* pOldPen;
         CPen WaspPen(PS_SOLID, 1, m_WaspColor);
         CPen BeePenOldColor(PS_SOLID, 1, m_OldBeeColor);
         CPen BeePen(PS_SOLID, 1, m_BeeColor);
-    
+
+        bool bUseGDI = m_bShowWasp || !m_bTrails;
+
         // Erase previous, draw current.
-    
+
         // Wasp
-        if (!m_bEscapeToScreen)
-            pOldPen = (CPen*)pDC->SelectObject(&m_BlackPen);
-        else
-            pOldPen = (CPen*)pDC->SelectObject(&WaspPen);
-    
+        pOldPen = (CPen*)pDC->SelectObject(&m_BlackPen);
+
         if (!m_bFollowPointer && m_bShowWasp)
         {
             if (init == FALSE)
@@ -456,210 +432,92 @@ void CSwarmWindow::DrawData(bool bEraseOnly /*= false*/)
                     pDC->LineTo(wasp_x[1], wasp_y[1]);
                 }
             }
-        
+
             if (!bEraseOnly)
             {
                 pDC->SelectObject(&WaspPen);
-        
+
                 pDC->MoveTo(wasp_x[0], wasp_y[0]);
                 pDC->LineTo(wasp_x[1], wasp_y[1]);
             }
         }
-    
+
         // Bees
-        if (!m_bEscapeToScreen)
-            pDC->SelectObject(&m_BlackPen);
-        else
-            pDC->SelectObject(&BeePenOldColor);
-    
+        pDC->SelectObject(&m_BlackPen);
+
         if (init == FALSE && !m_bTrails)
         {
             //erase old lines
             if (!bEraseOnly)
             {
-//                if (!m_bEscapeToScreen)
-//                {
-                    pDC->PolyPolyline(old_segs, m_psegPoints, m_Numbees);
-
-/*                }
-                else
-                {
-                    CRect rect;
-
-                    if (segs[0].x < segs[1].x)                
-                    {
-                        rect.left = segs[0].x;
-                        rect.right = segs[1].x;
-                    }
-                    else
-                    {
-                        rect.left = segs[1].x;
-                        rect.right = segs[0].x;
-                    }
-
-                    if (segs[0].y < segs[1].y)                
-                    {
-                        rect.top = segs[0].y;
-                        rect.bottom = segs[1].y;
-                    }
-                    else
-                    {
-                        rect.top = segs[1].y;
-                        rect.bottom = segs[0].y;
-                    }
-
-                    for (int ii = 1; ii < m_Numbees; ii++)
-                    {
-                        if (segs[ii*2].x < rect.left)
-                            rect.left = segs[ii*2].x;
-                        if (segs[ii*2 + 1].x < rect.left)
-                            rect.left = segs[ii*2 + 1].x;
-
-                        if (segs[ii*2].x > rect.right)
-                            rect.right = segs[ii*2].x;
-                        if (segs[ii*2 + 1].x > rect.right)
-                            rect.right = segs[ii*2 + 1].x;
-
-                        if (segs[ii*2].y < rect.top)
-                            rect.top = segs[ii*2].y;
-                        if (segs[ii*2 + 1].y < rect.top)
-                            rect.top = segs[ii*2 + 1].y;
-
-                        if (segs[ii*2].y > rect.bottom)
-                            rect.bottom = segs[ii*2].y;
-                        if (segs[ii*2 + 1].y > rect.bottom)
-                            rect.bottom = segs[ii*2 + 1].y;
-                    }
-
-                    rect.InflateRect(50,50);
-                    ::InvalidateRect( m_hWndExplorer, &rect, TRUE); ::UpdateWindow( m_hWndExplorer );
-                }
-*/                
+                pDC->PolyPolyline(old_segs, m_psegPoints, m_Numbees);
             }
             else
             {
-//                if (!m_bEscapeToScreen)
-//                {
-                    pDC->PolyPolyline(segs, m_psegPoints, m_Numbees);
-/*                }
-                else
-                {
-                    CRect rect;
-
-                    if (segs[0].x < segs[1].x)                
-                    {
-                        rect.left = segs[0].x;
-                        rect.right = segs[1].x;
-                    }
-                    else
-                    {
-                        rect.left = segs[1].x;
-                        rect.right = segs[0].x;
-                    }
-
-                    if (segs[0].y < segs[1].y)                
-                    {
-                        rect.top = segs[0].y;
-                        rect.bottom = segs[1].y;
-                    }
-                    else
-                    {
-                        rect.top = segs[1].y;
-                        rect.bottom = segs[0].y;
-                    }
-
-                    for (int ii = 1; ii < m_Numbees; ii++)
-                    {
-                        if (segs[ii*2].x < rect.left)
-                            rect.left = segs[ii*2].x;
-                        if (segs[ii*2 + 1].x < rect.left)
-                            rect.left = segs[ii*2 + 1].x;
-
-                        if (segs[ii*2].x > rect.right)
-                            rect.right = segs[ii*2].x;
-                        if (segs[ii*2 + 1].x > rect.right)
-                            rect.right = segs[ii*2 + 1].x;
-
-                        if (segs[ii*2].y < rect.top)
-                            rect.top = segs[ii*2].y;
-                        if (segs[ii*2 + 1].y < rect.top)
-                            rect.top = segs[ii*2 + 1].y;
-
-                        if (segs[ii*2].y > rect.bottom)
-                            rect.bottom = segs[ii*2].y;
-                        if (segs[ii*2 + 1].y > rect.bottom)
-                            rect.bottom = segs[ii*2 + 1].y;
-                    }
-
-                    ::InvalidateRect( m_hWndExplorer, &rect, TRUE); ::UpdateWindow( m_hWndExplorer );
-                }
-*/            }
+                pDC->PolyPolyline(segs, m_psegPoints, m_Numbees);
+            }
         }
 
         if (!bEraseOnly)
         {
             //GDI
-            //pDC->SelectObject(&BeePen);
-            //pDC->PolyPolyline(segs, m_psegPoints, m_Numbees);
-
-            //Anti-Aliased GDI
-            //CTGraphics ctg;
-            //for(int idx = 0; idx < m_Numbees; idx++)
-            //{
-            //    ctg.DrawPolyline(*pDC, segs + (idx * 2), m_psegPoints[idx], m_BeeColor);
-            //}
-
-            //GDI+
-            Graphics graphics(*pDC);
-            graphics.SetSmoothingMode(SmoothingModeAntiAlias);
-
-            BYTE r = GetRValue(m_BeeColor);
-            BYTE g = GetGValue(m_BeeColor);
-            BYTE b = GetBValue(m_BeeColor);
-
-            Gdiplus::Color argb(255, r, g, b);
-            Pen pen(argb);
-            for(int idx = 0; idx < m_Numbees; idx++)
+            if (bUseGDI)
             {
-                Point pt[2] = 
+                pDC->SelectObject(&BeePen);
+                pDC->PolyPolyline(segs, m_psegPoints, m_Numbees);
+
+                //Anti-Aliased GDI
+                //CTGraphics ctg;
+                //for(int idx = 0; idx < m_Numbees; idx++)
+                //{
+                //    ctg.DrawPolyline(*pDC, segs + (idx * 2), m_psegPoints[idx], m_BeeColor);
+                //}
+            }
+            else //GDI+
+            {
+                Graphics graphics(*pDC);
+                graphics.SetSmoothingMode(SmoothingModeAntiAlias);
+
+                BYTE r = GetRValue(m_BeeColor);
+                BYTE g = GetGValue(m_BeeColor);
+                BYTE b = GetBValue(m_BeeColor);
+
+                Gdiplus::Color argb(255, r, g, b);
+                Pen pen(argb);
+                for(int idx = 0; idx < m_Numbees; idx++)
                 {
-                    *reinterpret_cast<Point*>(segs + (idx * 2)),
-                    *reinterpret_cast<Point*>(segs + (idx * 2) + 1),
-                };
-                graphics.DrawLines(&pen, pt, 2);
+                    Point pt[2] = 
+                    {
+                        *reinterpret_cast<Point*>(segs + (idx * 2)),
+                        *reinterpret_cast<Point*>(segs + (idx * 2) + 1),
+                    };
+                    graphics.DrawLines(&pen, pt, 2);
+                }
             }
         }
-    
+
         // Clean up.
         pDC->SelectObject(pOldPen);
-    
-        if (m_bEscapeToScreen)
-            pDC->SetROP2(rop2);
 
-        if (m_bEscapeToScreen)
-        {
-            ::ReleaseDC(m_hWndExplorer, hdcScreen);
-        }
-        else
-            delete pDC;
+        delete pDC;
     }    
 }
 
 BOOL CSwarmWindow::Create(DWORD dwExStyle, DWORD dwStyle, const RECT& rect, 
-	CWnd* pParentWnd, UINT nID, CCreateContext* pContext) 
+                          CWnd* pParentWnd, UINT nID, CCreateContext* pContext) 
 {
     // Register a class with no cursor
-	if (m_lpszClassName == NULL)
-	{
-    	m_lpszClassName = AfxRegisterWndClass(CS_HREDRAW|CS_VREDRAW,
-			::LoadCursor(AfxGetResourceHandle(), 
-			MAKEINTRESOURCE(IDC_NULLCURSOR)));
-	}
+    if (m_lpszClassName == NULL)
+    {
+        m_lpszClassName = AfxRegisterWndClass(CS_HREDRAW|CS_VREDRAW,
+            ::LoadCursor(AfxGetResourceHandle(), 
+            MAKEINTRESOURCE(IDC_NULLCURSOR)));
+    }
 
-	// TODO: Add your specialized code here and/or call the base class
-	return CreateEx(dwExStyle, m_lpszClassName, _T(""), dwStyle, 
-		rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, 
-		pParentWnd->GetSafeHwnd(), NULL, NULL );
+    // TODO: Add your specialized code here and/or call the base class
+    return CreateEx(dwExStyle, m_lpszClassName, _T(""), dwStyle, 
+        rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, 
+        pParentWnd->GetSafeHwnd(), NULL, NULL );
 }
 
 void CSwarmWindow::SetClearTimer(int nSeconds)
@@ -714,19 +572,18 @@ void CSwarmWindow::InitMemory()
     y = (int *) malloc(sizeof(int) * m_Numbees * m_times);
     xv = (int *) malloc(sizeof(int) * m_Numbees);
     yv = (int *) malloc(sizeof(int) * m_Numbees);
-    
+
     // Initialize point positions, velocities, etc.
-    
+
     // wasp
     if (m_bFollowPointer)
     {
         POINT mousept;
         GetCursorPos(&mousept);
-        if (!m_bEscapeToScreen)
-            ScreenToClient(&mousept);
+        ScreenToClient(&mousept);
         wasp_x[0] = mousept.x;
         wasp_y[0] = mousept.y;
-        
+
         // Position Checks
         if (wasp_x[0] < m_border)
         {
@@ -760,7 +617,7 @@ void CSwarmWindow::InitMemory()
     wasp_target_y[1] = wasp_target_y[0] = wasp_y[0];
     wasp_target_xvel = 0;
     wasp_target_yvel = 0;
-    
+
     /* bees */
     for (int b = 0 ; b < m_Numbees ; b++)
     {
@@ -771,45 +628,5 @@ void CSwarmWindow::InitMemory()
         Y(1,b) = Y(0,b);
         xv[b] = RAND(7);
         yv[b] = RAND(7);
-    }
-}
-
-void CSwarmWindow::EscapeToScreen(bool bEscape)
-{
-    if (m_hWnd != NULL)
-    {
-        DrawData(true);
-
-        m_bEscapeToScreen = bEscape;
-
-        SetSizeData();
-
-        free(m_psegPoints);
-        free(segs);
-        free(old_segs);
-        free(x);
-        free(y);
-        free(xv);
-        free(yv);
-
-        init = TRUE;
-
-        if (bEscape)
-        {
-            KillTimer(m_ColorID);
-            m_ColorID = 0;
-            m_BeeColor = RGB(254,254,0);
-            m_OldBeeColor = RGB(254, 254, 0);
-        }
-        else
-        {
-            m_ColorID = SetTimer(2, 20, NULL);
-        }
-
-        Invalidate();
-    }
-    else
-    {
-        m_bEscapeToScreen = bEscape;
     }
 }

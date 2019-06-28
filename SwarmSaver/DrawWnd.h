@@ -22,7 +22,7 @@ public:
 public:
     void SetClearTimer(int nSeconds);
     void SetNumBees(int numBees);
-    void EscapeToScreen(bool bEscape);
+    //void EscapeToScreen(bool bEscape);
 
     void Initialize(); //If the window is subclassed instead of Created
 // Overrides
@@ -54,7 +54,6 @@ private:
     void InitMemory();
     void DrawData(bool bEraseOnly = false);
 
-    BOOL m_bEscapeToScreen;
     CBrush m_BkBrush;
     COLORREF m_WaspColor;
     COLORREF m_OldBeeColor;
@@ -67,6 +66,7 @@ private:
 
     long m_ClearMS;
 
+    CPoint m_Origin;
     int m_Width;
     int m_Height;
 
