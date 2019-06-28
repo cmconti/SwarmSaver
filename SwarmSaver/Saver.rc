@@ -1,0 +1,208 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#include ""res\\Saver.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "\r\n"
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "#include ""afxres.rc""  // Standard components\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\Saver.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG  34, 22, 217, 95
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About SwarmSaver"
+FONT 8, "MS Sans Serif"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,21,20
+    LTEXT           "SwarmSaver version 1.0",IDC_STATIC,40,10,119,8
+    LTEXT           "Copyright © Christopher Conti 1998",IDC_STATIC,40,36,119,8
+    DEFPUSHBUTTON   "OK",IDOK,176,6,32,14,WS_GROUP
+    LTEXT           "PretzelSoft",IDC_STATIC,40,23,50,8
+    LTEXT           "For any questions or comments conatct me at:\ncmconti@aol.com",IDC_STATIC,40,49,146,21
+    LTEXT           "Source based on xswarm as written by Jeff Butterworth\nand is freely available.",IDC_STATIC,40,71,173,18
+END
+
+IDD_SAVER_DIALOG DIALOG  0, 0, 200, 249
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "SwarmSaver"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "&Number of Bees:",IDC_STATIC,11,15,54,8
+    EDITTEXT        IDC_NUM_BEES,71,13,40,13,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "Spin1",IDC_SPIN_BEES,"msctls_updown32",UDS_WRAP | UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,114,13,10,14
+    CONTROL         "Show &Wasp",IDC_SHOWWASP,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,11,34,55,10
+    CONTROL         "Show &Trails",IDC_SHOWTRAILS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,11,55,53,10
+    LTEXT           "&Show Trails for ",IDC_STATIC,11,76,50,8
+    EDITTEXT        IDC_TRAILLEN,63,73,40,14,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "Spin2",IDC_SPIN_TRAILLEN,"msctls_updown32",UDS_WRAP | UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,155,73,10,14
+    LTEXT           "Seconds",IDC_STATIC,109,76,29,8
+    LTEXT           "Wasp &Max Velocity",IDC_STATIC,5,106,62,8
+    LTEXT           "10",IDC_STATIC,75,93,9,8
+    LTEXT           "Static",IDC_STATIC_WASP_VELOCITY,117,93,19,8
+    LTEXT           "80",IDC_STATIC,173,93,9,8
+    LTEXT           "&Bee Max Velocity",IDC_STATIC,6,142,56,8
+    LTEXT           "10",IDC_STATIC,76,129,9,8
+    LTEXT           "Static",IDC_STATIC_BEE_VELOCITY,118,129,19,8
+    LTEXT           "80",IDC_STATIC,174,129,9,8
+    LTEXT           "",IDC_PREVIEW,12,163,109,80,NOT WS_VISIBLE | WS_BORDER | NOT WS_GROUP
+    PUSHBUTTON      "&Reset Defaults",IDC_DEFAULTS,132,188,62,14
+    PUSHBUTTON      "&About",IDC_ABOUT,132,212,62,14
+    DEFPUSHBUTTON   "OK",IDOK,139,12,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,139,31,50,14
+    CONTROL         "Slider1",IDC_SCROLL_WASP,"msctls_trackbar32",TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,75,100,107,21
+    CONTROL         "Slider1",IDC_SCROLL_BEE,"msctls_trackbar32",TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,75,140,107,21
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,7
+ PRODUCTVERSION 1,0,0,7
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "CompanyName", "PretzelSoft"
+            VALUE "FileDescription", "SwarmSaver"
+            VALUE "FileVersion", "1.0.0.7"
+            VALUE "InternalName", "SwarmSaver"
+            VALUE "LegalCopyright", "Copyright © Christopher Conti 2010"
+            VALUE "OriginalFilename", "SwarmSaver.exe"
+            VALUE "ProductName", "SwarmSaver"
+            VALUE "ProductVersion", "1.0.0.7"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Cursor
+//
+
+IDC_NULLCURSOR          CURSOR                  "res\\cursor1.cur"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    ID_INDICATOR_EXT        "EXT"
+    ID_INDICATOR_CAPS       "CAP"
+    ID_INDICATOR_NUM        "NUM"
+    ID_INDICATOR_SCRL       "SCRL"
+    ID_INDICATOR_OVR        "OVR"
+    ID_INDICATOR_REC        "REC"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ABOUTBOX            "&About Saver..."
+    IDS_SCREENSAVER         "This is a screen saver and can not be run as a standalone executable."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DESCRIPTION         "SwarmSaver"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#include "res\Saver.rc2"  // non-Microsoft Visual C++ edited resources
+
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+#include "afxres.rc"  // Standard components
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
