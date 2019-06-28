@@ -373,7 +373,7 @@
 			Filter="ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe"
 			>
 			<File
-				RelativePath="res\cursor1.cur"
+				RelativePath="res\nullcursor.cur"
 				>
 			</File>
 			<File

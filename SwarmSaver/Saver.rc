@@ -73,11 +73,11 @@ CAPTION "About SwarmSaver"
 FONT 8, "MS Sans Serif"
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,17,21,20
-    LTEXT           "SwarmSaver version 1.0",IDC_STATIC,40,10,119,8
-    LTEXT           "Copyright © Christopher Conti 1998",IDC_STATIC,40,36,119,8
+    LTEXT           "SwarmSaver version 1.0.9",IDC_STATIC,40,10,119,8
+    LTEXT           "Copyright (c) 1998,2013,2019 cmconti",IDC_STATIC,40,36,119,8
     DEFPUSHBUTTON   "OK",IDOK,176,6,32,14,WS_GROUP
-    LTEXT           "PretzelSoft",IDC_STATIC,40,23,50,8
-    LTEXT           "For any questions or comments conatct me at:\ncmconti@aol.com",IDC_STATIC,40,49,146,21
+    LTEXT           "cmconti",IDC_STATIC,40,23,50,8
+    LTEXT           "For any questions or comments conatct me at:\nhttps://github.com/cmconti",IDC_STATIC,40,49,146,21
     LTEXT           "Source based on xswarm as written by Jeff Butterworth\nand is freely available.",IDC_STATIC,40,71,173,18
 END
 
@@ -135,14 +135,14 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "CompanyName", "PretzelSoft"
+            VALUE "CompanyName", "cmconti"
             VALUE "FileDescription", "SwarmSaver"
-            VALUE "FileVersion", "1.0.0.8"
+            VALUE "FileVersion", "1.0.0.9"
             VALUE "InternalName", "SwarmSaver"
-            VALUE "LegalCopyright", "Copyright © Christopher Conti 2010"
+            VALUE "LegalCopyright", "Copyright (c) 1998,2013,2019 cmconti"
             VALUE "OriginalFilename", "SwarmSaver.exe"
             VALUE "ProductName", "SwarmSaver"
-            VALUE "ProductVersion", "1.0.0.8"
+            VALUE "ProductVersion", "1.0.0.9"
         END
     END
     BLOCK "VarFileInfo"
@@ -157,7 +157,7 @@ END
 // Cursor
 //
 
-IDC_NULLCURSOR          CURSOR                  "res\\cursor1.cur"
+IDC_NULLCURSOR          CURSOR                  "res\\nullcursor.cur"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -176,7 +176,7 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_ABOUTBOX            "&About Saver..."
+    IDS_ABOUTBOX            "&About SwarmSaver..."
     IDS_SCREENSAVER         "This is a screen saver and can not be run as a standalone executable."
 END
 

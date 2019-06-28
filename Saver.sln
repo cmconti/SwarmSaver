@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Saver", "Saver.vcproj", "{D7F465E5-C170-47D0-BB22-7CAC0E8D07D8}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Saver", "SwarmSaver\Saver.vcproj", "{D7F465E5-C170-47D0-BB22-7CAC0E8D07D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
