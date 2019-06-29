@@ -2,9 +2,9 @@
 //
 
 #include "pch.h"
-#include "drawwnd.h"
+#include "SwarmWindow.h"
 #include "Saver.h"
-#include "saverwnd.h"
+#include "SaverWnd.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE

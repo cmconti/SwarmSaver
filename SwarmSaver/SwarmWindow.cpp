@@ -2,7 +2,7 @@
 //
 
 #include "pch.h"
-#include "DrawWnd.h"
+#include "SwarmWindow.h"
 #include "resource.h"
 
 #ifdef _DEBUG
