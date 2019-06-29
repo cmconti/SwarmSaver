@@ -4,7 +4,6 @@
 #include "pch.h"
 #include "DrawWnd.h"
 #include "resource.h"
-#include "TGraphics.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -465,13 +464,6 @@ void CSwarmWindow::DrawData(bool bEraseOnly /*= false*/)
             {
                 pDC->SelectObject(&BeePen);
                 pDC->PolyPolyline(segs, m_psegPoints, m_Numbees);
-
-                //Anti-Aliased GDI
-                //CTGraphics ctg;
-                //for(int idx = 0; idx < m_Numbees; idx++)
-                //{
-                //    ctg.DrawPolyline(*pDC, segs + (idx * 2), m_psegPoints[idx], m_BeeColor);
-                //}
             }
             else //GDI+
             {

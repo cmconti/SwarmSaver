@@ -203,7 +203,6 @@
     <ClInclude Include="Saver.h" />
     <ClInclude Include="Saverdlg.h" />
     <ClInclude Include="saverwnd.h" />
-    <ClInclude Include="TGraphics.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -216,7 +215,6 @@
     <ClCompile Include="Saver.cpp" />
     <ClCompile Include="Saverdlg.cpp" />
     <ClCompile Include="Saverwnd.cpp" />
-    <ClCompile Include="TGraphics.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Saver.rc" />
