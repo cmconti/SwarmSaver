@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="drawwnd.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -30,10 +27,13 @@
     <ClInclude Include="Saver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Saverdlg.h">
+    <ClInclude Include="SaverDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="saverwnd.h">
+    <ClInclude Include="SaverWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SwarmWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
@@ -41,16 +41,16 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Drawwnd.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Saver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Saverdlg.cpp">
+    <ClCompile Include="SaverDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Saverwnd.cpp">
+    <ClCompile Include="SaverWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SwarmWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
