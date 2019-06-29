@@ -2,7 +2,7 @@
 //
 
 #ifndef __AFXWIN_H__
-	#error "include 'pch.h' before including this file for PCH"
+#error "include 'pch.h' before including this file for PCH"
 #endif
 
 #include "resource.h"		// main symbols
@@ -14,20 +14,19 @@
 class CSaverApp : public CWinApp
 {
 public:
-	CSaverApp();
+    CSaverApp();
 
-// Overrides
-	public:
-	virtual BOOL InitInstance();
-	virtual int ExitInstance();
+    // Overrides
+public:
+    virtual BOOL InitInstance();
+    virtual int ExitInstance();
 
-// Implementation
-	void DoConfig(CWnd* pParent);
+    // Implementation
+    void DoConfig(CWnd* pParent);
 
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 
     CSwarmWindow* m_pSwarm;
 };
-
 
 extern CSaverApp theApp;

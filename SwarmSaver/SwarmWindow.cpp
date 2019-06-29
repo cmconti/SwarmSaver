@@ -20,8 +20,8 @@ LPCTSTR CSwarmWindow::m_lpszClassName = NULL;
 /////////////////////////////////////////////////////////////////////////////
 // CSwarmWindow
 
-CSwarmWindow::CSwarmWindow(bool bPreview /*= false*/) : m_BkBrush(RGB(0,0,0)), m_WaspColor(RGB(255,255,255)),
-m_BeeColor(RGB(254,254,0)), m_OldBeeColor(RGB(254, 254, 0)), m_BlackPen(PS_SOLID, 1, COLORREF(0))
+CSwarmWindow::CSwarmWindow(bool bPreview /*= false*/) : m_BkBrush(RGB(0, 0, 0)), m_WaspColor(RGB(255, 255, 255)),
+m_BeeColor(RGB(254, 254, 0)), m_OldBeeColor(RGB(254, 254, 0)), m_BlackPen(PS_SOLID, 1, COLORREF(0))
 {
     m_AnimateID = 0;
     m_ColorID = 0;
@@ -57,7 +57,6 @@ CSwarmWindow::~CSwarmWindow()
 {
 }
 
-
 BEGIN_MESSAGE_MAP(CSwarmWindow, CWnd)
     //{{AFX_MSG_MAP(CSwarmWindow)
     ON_WM_ERASEBKGND()
@@ -71,7 +70,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CSwarmWindow message handlers
 
-int CSwarmWindow::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CSwarmWindow::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
     if (CWnd::OnCreate(lpCreateStruct) == -1)
         return -1;
@@ -106,14 +105,14 @@ void CSwarmWindow::SetSizeData()
     m_Height = rectWin.Height();
 }
 
-void CSwarmWindow::OnSize(UINT nType, int cx, int cy) 
+void CSwarmWindow::OnSize(UINT nType, int cx, int cy)
 {
     CWnd::OnSize(nType, cx, cy);
 
     SetSizeData();
 }
 
-BOOL CSwarmWindow::OnEraseBkgnd(CDC* pDC) 
+BOOL CSwarmWindow::OnEraseBkgnd(CDC* pDC)
 {
     // Save the old brush
     CBrush* pOldBrush = (CBrush*)pDC->SelectObject(&m_BkBrush);
@@ -130,7 +129,7 @@ BOOL CSwarmWindow::OnEraseBkgnd(CDC* pDC)
     return FALSE;  // message handled
 }
 
-void CSwarmWindow::OnDestroy() 
+void CSwarmWindow::OnDestroy()
 {
     KillTimer(m_AnimateID);
     KillTimer(m_ColorID);
@@ -143,7 +142,7 @@ void CSwarmWindow::OnDestroy()
     free(xv);
     free(yv);
 
-    CWnd::OnDestroy();	
+    CWnd::OnDestroy();
 }
 void CSwarmWindow::Find95Desktop()
 {
@@ -172,7 +171,7 @@ void CSwarmWindow::OnTimer(UINT_PTR nIDEvent)
         }
         else
         {
-            // Make sure the wasp is within the window. 
+            // Make sure the wasp is within the window.
             //if (wasp_x[0] < m_border) wasp_x[0] = m_border;
             //if (wasp_x[0] > m_Width-m_border-1) wasp_x[0] = m_Width-m_border-1;
             //if (wasp_y[0] < m_border) wasp_y[0] = m_border;
@@ -204,19 +203,18 @@ void CSwarmWindow::OnTimer(UINT_PTR nIDEvent)
             {
                 wasp_x[0] = m_border;
             }
-            if  (wasp_x[0] > m_Width-m_border-1)
+            if (wasp_x[0] > m_Width - m_border - 1)
             {
-                wasp_x[0] = m_Width-m_border-1;
+                wasp_x[0] = m_Width - m_border - 1;
             }
             if (wasp_y[0] < m_border)
             {
                 wasp_y[0] = m_border;
             }
-            if (wasp_y[0] > m_Height-m_border-1)
+            if (wasp_y[0] > m_Height - m_border - 1)
             {
-                wasp_y[0] = m_Height-m_border-1;
+                wasp_y[0] = m_Height - m_border - 1;
             }
-
         }
         else
         {
@@ -230,21 +228,20 @@ void CSwarmWindow::OnTimer(UINT_PTR nIDEvent)
             if (wasp_yvel > m_wasp_vel) wasp_yvel = m_wasp_vel;
             if (wasp_yvel < -m_wasp_vel) wasp_yvel = -m_wasp_vel;
 
-
-            // Move 
+            // Move
             wasp_x[0] = wasp_x[1] + wasp_xvel;
             wasp_y[0] = wasp_y[1] + wasp_yvel;
 
             // Bounce Checks
-            if ((wasp_x[0] < m_border) || (wasp_x[0] > m_Width-m_border-1))
+            if ((wasp_x[0] < m_border) || (wasp_x[0] > m_Width - m_border - 1))
             {
                 wasp_xvel = -wasp_xvel;
-                wasp_x[0] += wasp_xvel<<1;
+                wasp_x[0] += wasp_xvel << 1;
             }
-            if ((wasp_y[0] < m_border) || (wasp_y[0] > m_Height-m_border-1))
+            if ((wasp_y[0] < m_border) || (wasp_y[0] > m_Height - m_border - 1))
             {
                 wasp_yvel = -wasp_yvel;
-                wasp_y[0] += wasp_yvel<<1;
+                wasp_y[0] += wasp_yvel << 1;
             }
             /*
             //move the target
@@ -258,8 +255,7 @@ void CSwarmWindow::OnTimer(UINT_PTR nIDEvent)
             if (wasp_target_yvel > (m_wasp_vel/2)) wasp_target_yvel = (m_wasp_vel/2);
             if (wasp_target_yvel < (-m_wasp_vel/2)) wasp_target_yvel = (-m_wasp_vel/2);
 
-
-            // Move 
+            // Move
             wasp_target_x[0] = wasp_target_x[1] + wasp_target_xvel;
             wasp_target_y[0] = wasp_target_y[1] + wasp_target_yvel;
 
@@ -290,31 +286,32 @@ void CSwarmWindow::OnTimer(UINT_PTR nIDEvent)
             if (wasp_yvel > m_wasp_vel) wasp_yvel = m_wasp_vel;
             if (wasp_yvel < -m_wasp_vel) wasp_yvel = -m_wasp_vel;
 
-            // Move 
+            // Move
             wasp_x[0] = wasp_x[1] + wasp_xvel;
             wasp_y[0] = wasp_y[1] + wasp_yvel;
-            */        }
+            */
+        }
 
         /* Don't let things settle down. */
-        xv[rand() % m_Numbees] += RAND(m_bee_acc + m_bee_acc/2);
-        yv[rand() % m_Numbees] += RAND(m_bee_acc + m_bee_acc/2);
+        xv[rand() % m_Numbees] += RAND(m_bee_acc + m_bee_acc / 2);
+        yv[rand() % m_Numbees] += RAND(m_bee_acc + m_bee_acc / 2);
 
         /* <=- Bees -=> */
-        for (int b = 0 ; b < m_Numbees ; b++)
+        for (int b = 0; b < m_Numbees; b++)
         {
             /* Age the arrays. */
-            X(2,b) = X(1,b);
-            X(1,b) = X(0,b);
-            Y(2,b) = Y(1,b);
-            Y(1,b) = Y(0,b);
+            X(2, b) = X(1, b);
+            X(1, b) = X(0, b);
+            Y(2, b) = Y(1, b);
+            Y(1, b) = Y(0, b);
 
             /* Accelerate */
-            dx = wasp_x[1] - X(1,b);
-            dy = wasp_y[1] - Y(1,b);
-            distance = abs(dx)+abs(dy); /* approximation */
+            dx = wasp_x[1] - X(1, b);
+            dy = wasp_y[1] - Y(1, b);
+            distance = abs(dx) + abs(dy); /* approximation */
             if (distance == 0) distance = 1;
-            xv[b] += (dx*m_bee_acc)/distance;
-            yv[b] += (dy*m_bee_acc)/distance;
+            xv[b] += (dx * m_bee_acc) / distance;
+            yv[b] += (dy * m_bee_acc) / distance;
 
             /* Speed Limit Checks */
             if (xv[b] > m_bee_vel) xv[b] = m_bee_vel;
@@ -323,18 +320,18 @@ void CSwarmWindow::OnTimer(UINT_PTR nIDEvent)
             if (yv[b] < -m_bee_vel) yv[b] = -m_bee_vel;
 
             /* Move */
-            X(0,b) = X(1,b) + xv[b];
-            Y(0,b) = Y(1,b) + yv[b];
+            X(0, b) = X(1, b) + xv[b];
+            Y(0, b) = Y(1, b) + yv[b];
 
             /* Fill the segment lists. */
-            segs[b*2].x = X(0,b);
-            segs[b*2].y = Y(0,b);
-            segs[b*2 + 1].x = X(1,b);
-            segs[b*2 + 1].y = Y(1,b);
-            old_segs[b*2].x = X(1,b);
-            old_segs[b*2].y = Y(1,b);
-            old_segs[b*2 + 1].x = X(2,b);
-            old_segs[b*2 + 1].y = Y(2,b);
+            segs[b * 2].x = X(0, b);
+            segs[b * 2].y = Y(0, b);
+            segs[b * 2 + 1].x = X(1, b);
+            segs[b * 2 + 1].y = Y(1, b);
+            old_segs[b * 2].x = X(1, b);
+            old_segs[b * 2].y = Y(1, b);
+            old_segs[b * 2 + 1].x = X(2, b);
+            old_segs[b * 2 + 1].y = Y(2, b);
         }
 
         DrawData();
@@ -371,17 +368,17 @@ void CSwarmWindow::OnTimer(UINT_PTR nIDEvent)
             break;
         }
 
-        if ( (NextColor == Red) && (BlueValue == 0) )
+        if ((NextColor == Red) && (BlueValue == 0))
             NextColor = Yellow;
-        else if ( (NextColor == Yellow) && (GreenValue == 254) )
+        else if ((NextColor == Yellow) && (GreenValue == 254))
             NextColor = Green;
-        else if ( (NextColor == Green) && (RedValue == 0) )
+        else if ((NextColor == Green) && (RedValue == 0))
             NextColor = Cyan;
-        else if ( (NextColor == Cyan) && (BlueValue == 254) )
+        else if ((NextColor == Cyan) && (BlueValue == 254))
             NextColor = Blue;
-        else if ( (NextColor == Blue) && (GreenValue == 0) )
+        else if ((NextColor == Blue) && (GreenValue == 0))
             NextColor = Magenta;
-        else if ( (NextColor == Magenta) && (RedValue == 254) )
+        else if ((NextColor == Magenta) && (RedValue == 254))
             NextColor = Red;
 
         m_BeeColor = RGB(RedValue, GreenValue, BlueValue);
@@ -476,9 +473,9 @@ void CSwarmWindow::DrawData(bool bEraseOnly /*= false*/)
 
                 Gdiplus::Color argb(255, r, g, b);
                 Pen pen(argb);
-                for(int idx = 0; idx < m_Numbees; idx++)
+                for (int idx = 0; idx < m_Numbees; idx++)
                 {
-                    Point pt[2] = 
+                    Point pt[2] =
                     {
                         *reinterpret_cast<Point*>(segs + (idx * 2)),
                         *reinterpret_cast<Point*>(segs + (idx * 2) + 1),
@@ -492,24 +489,24 @@ void CSwarmWindow::DrawData(bool bEraseOnly /*= false*/)
         pDC->SelectObject(pOldPen);
 
         delete pDC;
-    }    
+    }
 }
 
-BOOL CSwarmWindow::Create(DWORD dwExStyle, DWORD dwStyle, const RECT& rect, 
-                          CWnd* pParentWnd, UINT nID, CCreateContext* pContext) 
+BOOL CSwarmWindow::Create(DWORD dwExStyle, DWORD dwStyle, const RECT& rect,
+    CWnd* pParentWnd, UINT nID, CCreateContext* pContext)
 {
     // Register a class with no cursor
     if (m_lpszClassName == NULL)
     {
-        m_lpszClassName = AfxRegisterWndClass(CS_HREDRAW|CS_VREDRAW,
-            ::LoadCursor(AfxGetResourceHandle(), 
-            MAKEINTRESOURCE(IDC_NULLCURSOR)));
+        m_lpszClassName = AfxRegisterWndClass(CS_HREDRAW | CS_VREDRAW,
+            ::LoadCursor(AfxGetResourceHandle(),
+                MAKEINTRESOURCE(IDC_NULLCURSOR)));
     }
 
     // TODO: Add your specialized code here and/or call the base class
-    return CreateEx(dwExStyle, m_lpszClassName, _T(""), dwStyle, 
-        rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, 
-        pParentWnd->GetSafeHwnd(), NULL, NULL );
+    return CreateEx(dwExStyle, m_lpszClassName, _T(""), dwStyle,
+        rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top,
+        pParentWnd->GetSafeHwnd(), NULL, NULL);
 }
 
 void CSwarmWindow::SetClearTimer(int nSeconds)
@@ -557,13 +554,13 @@ void CSwarmWindow::SetNumBees(int numBees)
 void CSwarmWindow::InitMemory()
 {
     /* Allocate memory. */
-    m_psegPoints = (DWORD *) malloc(sizeof(DWORD) * m_Numbees);
-    segs = (POINT *) malloc(sizeof(POINT) * m_Numbees * 2);
-    old_segs = (POINT *) malloc(sizeof(POINT) * m_Numbees * 2);
-    x = (int *) malloc(sizeof(int) * m_Numbees * m_times);
-    y = (int *) malloc(sizeof(int) * m_Numbees * m_times);
-    xv = (int *) malloc(sizeof(int) * m_Numbees);
-    yv = (int *) malloc(sizeof(int) * m_Numbees);
+    m_psegPoints = (DWORD*)malloc(sizeof(DWORD) * m_Numbees);
+    segs = (POINT*)malloc(sizeof(POINT) * m_Numbees * 2);
+    old_segs = (POINT*)malloc(sizeof(POINT) * m_Numbees * 2);
+    x = (int*)malloc(sizeof(int) * m_Numbees * m_times);
+    y = (int*)malloc(sizeof(int) * m_Numbees * m_times);
+    xv = (int*)malloc(sizeof(int) * m_Numbees);
+    yv = (int*)malloc(sizeof(int) * m_Numbees);
 
     // Initialize point positions, velocities, etc.
 
@@ -581,23 +578,23 @@ void CSwarmWindow::InitMemory()
         {
             wasp_x[0] = m_border;
         }
-        if  (wasp_x[0] > m_Width-m_border-1)
+        if (wasp_x[0] > m_Width - m_border - 1)
         {
-            wasp_x[0] = m_Width-m_border-1;
+            wasp_x[0] = m_Width - m_border - 1;
         }
         if (wasp_y[0] < m_border)
         {
             wasp_y[0] = m_border;
         }
-        if (wasp_y[0] > m_Height-m_border-1)
+        if (wasp_y[0] > m_Height - m_border - 1)
         {
-            wasp_y[0] = m_Height-m_border-1;
+            wasp_y[0] = m_Height - m_border - 1;
         }
     }
     else
     {
-        wasp_x[0] = m_border + rand() % (m_Width - 2*m_border);
-        wasp_y[0] = m_border + rand() % (m_Height - 2*m_border);
+        wasp_x[0] = m_border + rand() % (m_Width - 2 * m_border);
+        wasp_y[0] = m_border + rand() % (m_Height - 2 * m_border);
     }
     wasp_x[1] = wasp_x[0];
     wasp_y[1] = wasp_y[0];
@@ -611,13 +608,13 @@ void CSwarmWindow::InitMemory()
     wasp_target_yvel = 0;
 
     /* bees */
-    for (int b = 0 ; b < m_Numbees ; b++)
+    for (int b = 0; b < m_Numbees; b++)
     {
         m_psegPoints[b] = 2;
-        X(0,b) = rand() % m_Width;
-        X(1,b) = X(0,b);
-        Y(0,b) = rand() % m_Height;
-        Y(1,b) = Y(0,b);
+        X(0, b) = rand() % m_Width;
+        X(1, b) = X(0, b);
+        Y(0, b) = rand() % m_Height;
+        Y(1, b) = Y(0, b);
         xv[b] = RAND(7);
         yv[b] = RAND(7);
     }
