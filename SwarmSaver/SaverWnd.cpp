@@ -1,7 +1,7 @@
 // saverwnd.cpp : implementation file
 //
 
-#include "stdafx.h"
+#include "pch.h"
 #include "drawwnd.h"
 #include "Saver.h"
 #include "saverwnd.h"

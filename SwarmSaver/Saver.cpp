@@ -1,26 +1,20 @@
 // Saver.cpp : Defines the class behaviors for the application.
 //
 
-#include "stdafx.h"
+#include "pch.h"
 #include "drawwnd.h"
 #include "Saver.h"
 #include "Saverdlg.h"
 #include "saverwnd.h"
 
 #ifdef _DEBUG
-#undef THIS_FILE
-static char BASED_CODE THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
 // CSaverApp
 
 BEGIN_MESSAGE_MAP(CSaverApp, CWinApp)
-	//{{AFX_MSG_MAP(CSaverApp)
-		// NOTE - the ClassWizard will add and remove mapping macros here.
-		//    DO NOT EDIT what you see in these blocks of generated code!
-	//}}AFX_MSG
-	ON_COMMAND(ID_HELP, CWinApp::OnHelp)
+	ON_COMMAND(ID_HELP, &CWinApp::OnHelp)
 END_MESSAGE_MAP()
 
 TCHAR szConfig[]=_T("Config");
@@ -43,7 +37,7 @@ BOOL MatchOption(LPTSTR lpsz, LPTSTR lpszOption)
 {
     if (lpsz != NULL)
     {
-	    if (lpsz[0] == '-' || lpsz[0] == '/')
+	    if (lpsz[0] == _T('-') || lpsz[0] == _T('/'))
 		    lpsz++;
 	    if (lstrcmpi(lpsz, lpszOption) == 0)
 		    return TRUE;
@@ -56,6 +50,28 @@ BOOL MatchOption(LPTSTR lpsz, LPTSTR lpszOption)
 
 BOOL CSaverApp::InitInstance()
 {
+	// InitCommonControlsEx() is required on Windows XP if an application
+	// manifest specifies use of ComCtl32.dll version 6 or later to enable
+	// visual styles.  Otherwise, any window creation will fail.
+	INITCOMMONCONTROLSEX InitCtrls;
+	InitCtrls.dwSize = sizeof(InitCtrls);
+	// Set this to include all the common control classes you want to use
+	// in your application.
+	InitCtrls.dwICC = ICC_WIN95_CLASSES;
+	InitCommonControlsEx(&InitCtrls);
+
+	CWinApp::InitInstance();
+
+
+	AfxEnableControlContainer();
+
+	// Create the shell manager, in case the dialog contains
+	// any shell tree view or shell list view controls.
+	CShellManager *pShellManager = new CShellManager;
+
+	// Activate "Windows Native" visual manager for enabling themes in MFC controls
+	CMFCVisualManager::SetDefaultManager(RUNTIME_CLASS(CMFCVisualManagerWindows));
+
 	// Standard initialization
 	// If you are not using these features and wish to reduce the size
 	//  of your final executable, you should remove from the following
@@ -71,24 +87,32 @@ BOOL CSaverApp::InitInstance()
     //this is necessary because the application may be launched with an 8.3 module name
     BOOL bEnable = AfxEnableMemoryTracking(FALSE);
 	free((void*)m_pszProfileName);
-	m_pszProfileName = _tcsdup("SwarmSaver");
+	m_pszProfileName = _tcsdup(_T("SwarmSaver"));
 	AfxEnableMemoryTracking(bEnable);
 
-    TRACE("arg 1 = %s\n", __argv[1]);
+    TRACE(_T("arg 1 = %s\n"), __targv[1]);
 
-	if (__argc == 1 || MatchOption(__argv[1], _T("c")))
+	if (__argc == 1 || MatchOption(__targv[1], _T("c")))
 		DoConfig(CWnd::GetActiveWindow());
-    else if ( (__argv[1][1] == 'c' || __argv[1][1] == 'C') && __argv[1][2] == ':')
+    else if ( (__targv[1][1] == _T('c') || __targv[1][1] == _T('C')) && __targv[1][2] == _T(':'))
     {
-        HWND hWndParent = (HWND)atol(__argv[1] + 3);
+#ifdef _WIN64
+        HWND hWndParent = (HWND)_ttoll(__targv[1] + 3);
+#else
+        HWND hWndParent = (HWND)_ttol(__targv[1] + 3);
+#endif
         CWnd wndParent;
         wndParent.Attach(hWndParent);
         DoConfig(&wndParent);
         wndParent.Detach();
     }
-	else if (MatchOption(__argv[1], _T("p")))
+	else if (MatchOption(__targv[1], _T("p")))
 	{
-		CWnd* pParent = CWnd::FromHandle((HWND)atol(__argv[2]));
+#ifdef _WIN64
+        CWnd* pParent = CWnd::FromHandle((HWND)_ttoll(__targv[2]));
+#else
+        CWnd* pParent = CWnd::FromHandle((HWND)_ttol(__targv[2]));
+#endif
 		ASSERT(pParent != NULL);
 		m_pSwarm = new CSwarmWindow(true);
 
@@ -109,7 +133,7 @@ BOOL CSaverApp::InitInstance()
 		m_pMainWnd = m_pSwarm;
 		return TRUE;
 	}
-	else if (MatchOption(__argv[1], _T("s")))
+	else if (MatchOption(__targv[1], _T("s")))
 	{
 		CSaverWnd* pWnd = new CSaverWnd;
 

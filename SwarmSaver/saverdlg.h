@@ -1,18 +1,21 @@
-// Saverdlg.h : header file
+
+// SaverDlg.h : header file
 //
 
-/////////////////////////////////////////////////////////////////////////////
-// CSaverDlg dialog
+#pragma once
 
-class CSaverDlg : public CDialog
+
+// CSaverDlg dialog
+class CSaverDlg : public CDialogEx
 {
 // Construction
 public:
-	CSaverDlg(CWnd* pParent = NULL);	// standard constructor
+	CSaverDlg(CWnd* pParent = nullptr);	// standard constructor
 
 // Dialog Data
-	//{{AFX_DATA(CSaverDlg)
+#ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_SAVER_DIALOG };
+#endif
 	CSliderCtrl	m_ctrlBeeVel;
 	CSliderCtrl	m_ctrlWaspVel;
 	CSpinButtonCtrl	m_TrailSpinCtrl;
@@ -25,15 +28,11 @@ public:
 	CString	m_BeeVelText;
 	int		m_BeeVel;
 	int		m_WaspVel;
-	//}}AFX_DATA
 
     bool m_bVerifyNumbers;
 
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CSaverDlg)
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
-	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
@@ -41,7 +40,6 @@ protected:
 	CSwarmWindow m_wndPreview; // don't autodelete
 
 	// Generated message map functions
-	//{{AFX_MSG(CSaverDlg)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnPaint();
@@ -54,6 +52,7 @@ protected:
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg void OnDefaults();
 	virtual void OnOK();
-	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnBnClickedDefaults2();
 };

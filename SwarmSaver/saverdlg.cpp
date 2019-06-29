@@ -1,55 +1,49 @@
-// Saverdlg.cpp : implementation file
+
+// SaverDlg.cpp : implementation file
 //
 
-#include "stdafx.h"
+#include "pch.h"
 #include "drawwnd.h"
 #include "Saver.h"
-#include "Saverdlg.h"
+#include "SaverDlg.h"
+#include "afxdialogex.h"
 
 #ifdef _DEBUG
-#undef THIS_FILE
-static char BASED_CODE THIS_FILE[] = __FILE__;
+#define new DEBUG_NEW
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
+
 // CAboutDlg dialog used for App About
 
-class CAboutDlg : public CDialog
+class CAboutDlg : public CDialogEx
 {
 public:
 	CAboutDlg();
 
 // Dialog Data
-	//{{AFX_DATA(CAboutDlg)
+#ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_ABOUTBOX };
-	//}}AFX_DATA
+#endif
+
+	protected:
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
 // Implementation
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
-	//{{AFX_MSG(CAboutDlg)
 	virtual BOOL OnInitDialog();
-	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
 
-CAboutDlg::CAboutDlg() : CDialog(CAboutDlg::IDD)
+CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX)
 {
-	//{{AFX_DATA_INIT(CAboutDlg)
-	//}}AFX_DATA_INIT
 }
 
 void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CAboutDlg)
-	//}}AFX_DATA_MAP
+	CDialogEx::DoDataExchange(pDX);
 }
 
-BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
-	//{{AFX_MSG_MAP(CAboutDlg)
-		// No message handlers
-	//}}AFX_MSG_MAP
+BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -57,7 +51,7 @@ END_MESSAGE_MAP()
 
 BOOL CAboutDlg::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+	CDialogEx::OnInitDialog();
 	CenterWindow();
 	
 	// TODO: Add extra about dlg initialization here
@@ -65,13 +59,11 @@ BOOL CAboutDlg::OnInitDialog()
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
-/////////////////////////////////////////////////////////////////////////////
 // CSaverDlg dialog
 
-CSaverDlg::CSaverDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(CSaverDlg::IDD, pParent), m_wndPreview(true)
+CSaverDlg::CSaverDlg(CWnd* pParent /*=nullptr*/)
+	: CDialogEx(IDD_SAVER_DIALOG, pParent), m_wndPreview(true)
 {
-	//{{AFX_DATA_INIT(CSaverDlg)
 	m_TrailLength = 30;
 	m_bShowWasp = FALSE;
 	m_bShowTrails = FALSE;
@@ -80,7 +72,7 @@ CSaverDlg::CSaverDlg(CWnd* pParent /*=NULL*/)
 	m_BeeVelText = _T("");
 	m_BeeVel = 25;
 	m_WaspVel = 26;
-	//}}AFX_DATA_INIT
+
 	// Note that LoadIcon does not require a subsequent DestroyIcon in Win32
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
     m_bVerifyNumbers = false;
@@ -88,8 +80,8 @@ CSaverDlg::CSaverDlg(CWnd* pParent /*=NULL*/)
 
 void CSaverDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CSaverDlg)
+	CDialogEx::DoDataExchange(pDX);
+
 	DDX_Control(pDX, IDC_SCROLL_WASP, m_ctrlWaspVel);
 	DDX_Control(pDX, IDC_SCROLL_BEE, m_ctrlBeeVel);
 	DDX_Control(pDX, IDC_SPIN_TRAILLEN, m_TrailSpinCtrl);
@@ -100,7 +92,6 @@ void CSaverDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_NUM_BEES, m_NumBees);
 	DDX_Text(pDX, IDC_STATIC_WASP_VELOCITY, m_WaspVelText);
 	DDX_Text(pDX, IDC_STATIC_BEE_VELOCITY, m_BeeVelText);
-	//}}AFX_DATA_MAP
 
     if (!pDX->m_bSaveAndValidate)
     {
@@ -120,8 +111,7 @@ void CSaverDlg::DoDataExchange(CDataExchange* pDX)
     }
 }
 
-BEGIN_MESSAGE_MAP(CSaverDlg, CDialog)
-	//{{AFX_MSG_MAP(CSaverDlg)
+BEGIN_MESSAGE_MAP(CSaverDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
@@ -132,15 +122,14 @@ BEGIN_MESSAGE_MAP(CSaverDlg, CDialog)
 	ON_EN_CHANGE(IDC_TRAILLEN, OnChangeTraillen)
 	ON_WM_HSCROLL()
 	ON_BN_CLICKED(IDC_DEFAULTS, OnDefaults)
-	//}}AFX_MSG_MAP
+	ON_BN_CLICKED(IDC_DEFAULTS2, &CSaverDlg::OnBnClickedDefaults2)
 END_MESSAGE_MAP()
 
-/////////////////////////////////////////////////////////////////////////////
 // CSaverDlg message handlers
 
 BOOL CSaverDlg::OnInitDialog()
 {
-	CDialog::OnInitDialog();
+	CDialogEx::OnInitDialog();
 
 	CRect rect;
 	GetDlgItem(IDC_PREVIEW)->GetWindowRect(&rect);
@@ -165,14 +154,24 @@ BOOL CSaverDlg::OnInitDialog()
 	ASSERT(IDM_ABOUTBOX < 0xF000);
 
 	CMenu* pSysMenu = GetSystemMenu(FALSE);
-	CString strAboutMenu;
-	strAboutMenu.LoadString(IDS_ABOUTBOX);
-	if (!strAboutMenu.IsEmpty())
+	if (pSysMenu != nullptr)
 	{
-		pSysMenu->AppendMenu(MF_SEPARATOR);
-		pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
+		BOOL bNameValid;
+		CString strAboutMenu;
+		bNameValid = strAboutMenu.LoadString(IDS_ABOUTBOX);
+		ASSERT(bNameValid);
+		if (!strAboutMenu.IsEmpty())
+		{
+			pSysMenu->AppendMenu(MF_SEPARATOR);
+			pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
+		}
 	}
 	
+	// Set the icon for this dialog.  The framework does this automatically
+	//  when the application's main window is not a dialog
+	SetIcon(m_hIcon, TRUE);			// Set big icon
+	SetIcon(m_hIcon, FALSE);		// Set small icon
+
 	// TODO: Add extra initialization here
     m_TrailSpinCtrl.SetRange(1,60);
     m_BeesSpinCtrl.SetRange(10,100);
@@ -183,8 +182,8 @@ BOOL CSaverDlg::OnInitDialog()
     m_ctrlBeeVel.SetPos(m_BeeVel);
     m_ctrlWaspVel.SetPos(m_WaspVel);
 
-    m_BeeVelText.Format("%d",m_BeeVel);
-    m_WaspVelText.Format("%d",m_WaspVel);
+    m_BeeVelText.Format(_T("%d"),m_BeeVel);
+    m_WaspVelText.Format(_T("%d"),m_WaspVel);
 
     UpdateData(FALSE);
 
@@ -200,7 +199,7 @@ void CSaverDlg::OnSysCommand(UINT nID, LPARAM lParam)
 	}
 	else
 	{
-		CDialog::OnSysCommand(nID, lParam);
+		CDialogEx::OnSysCommand(nID, lParam);
 	}
 }
 
@@ -214,7 +213,7 @@ void CSaverDlg::OnPaint()
 	{
 		CPaintDC dc(this); // device context for painting
 
-		SendMessage(WM_ICONERASEBKGND, (WPARAM) dc.GetSafeHdc(), 0);
+		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
 
 		// Center icon in client rectangle
 		int cxIcon = GetSystemMetrics(SM_CXICON);
@@ -229,15 +228,15 @@ void CSaverDlg::OnPaint()
 	}
 	else
 	{
-		CDialog::OnPaint();
+		CDialogEx::OnPaint();
 	}
 }
 
-// The system calls this to obtain the cursor to display while the user drags
+// The system calls this function to obtain the cursor to display while the user drags
 //  the minimized window.
 HCURSOR CSaverDlg::OnQueryDragIcon()
 {
-	return (HCURSOR) m_hIcon;
+	return static_cast<HCURSOR>(m_hIcon);
 }
 
 void CSaverDlg::OnAbout() 
@@ -301,12 +300,12 @@ void CSaverDlg::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
     {
         if (pBar == &m_ctrlWaspVel)
         {
-            m_WaspVelText.Format("%d", nPos);
+            m_WaspVelText.Format(_T("%d"), nPos);
             m_WaspVel = nPos;
         }
         else if (pBar == &m_ctrlBeeVel)
         {
-            m_BeeVelText.Format("%d", nPos);
+            m_BeeVelText.Format(_T("%d"), nPos);
             m_BeeVel = nPos;
         }
 
@@ -317,12 +316,12 @@ void CSaverDlg::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
         if (pBar == &m_ctrlWaspVel)
         {
             m_WaspVel++;
-            m_WaspVelText.Format("%d", m_WaspVel);
+            m_WaspVelText.Format(_T("%d"), m_WaspVel);
         }
         else if (pBar == &m_ctrlBeeVel)
         {
             m_BeeVel++;
-            m_BeeVelText.Format("%d", m_BeeVel);
+            m_BeeVelText.Format(_T("%d"), m_BeeVel);
         }
 
         UpdateData(FALSE);
@@ -332,12 +331,12 @@ void CSaverDlg::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
         if (pBar == &m_ctrlWaspVel)
         {
             m_WaspVel--;
-            m_WaspVelText.Format("%d", m_WaspVel);
+            m_WaspVelText.Format(_T("%d"), m_WaspVel);
         }
         else if (pBar == &m_ctrlBeeVel)
         {
             m_BeeVel--;
-            m_BeeVelText.Format("%d", m_BeeVel);
+            m_BeeVelText.Format(_T("%d"), m_BeeVel);
         }
 
         UpdateData(FALSE);
@@ -347,7 +346,7 @@ void CSaverDlg::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
     m_wndPreview.m_bee_vel = m_BeeVel/2;
     m_wndPreview.Invalidate();
     
-	CDialog::OnHScroll(nSBCode, nPos, pScrollBar);
+	CDialogEx::OnHScroll(nSBCode, nPos, pScrollBar);
 }
 
 void CSaverDlg::OnDefaults() 
@@ -370,17 +369,45 @@ void CSaverDlg::OnDefaults()
     m_ctrlBeeVel.SetPos(m_BeeVel);
     m_ctrlWaspVel.SetPos(m_WaspVel);
 
-    m_BeeVelText.Format("%d",m_BeeVel);
-    m_WaspVelText.Format("%d",m_WaspVel);
+    m_BeeVelText.Format(_T("%d"),m_BeeVel);
+    m_WaspVelText.Format(_T("%d"),m_WaspVel);
 
     UpdateData(FALSE);
 }
 
-void CSaverDlg::OnOK() 
+
+
+void CSaverDlg::OnBnClickedDefaults2()
+{
+	m_bShowTrails = true;
+	m_bShowWasp = false;
+	m_TrailLength = 30;
+	m_NumBees = 40;
+	m_WaspVel = 40;
+	m_BeeVel = 33;
+
+	m_wndPreview.m_bTrails = m_bShowTrails;
+	m_wndPreview.m_bShowWasp = m_bShowWasp;
+	m_wndPreview.SetClearTimer(m_TrailLength);
+	m_wndPreview.SetNumBees(m_NumBees);
+	m_wndPreview.m_wasp_vel = m_WaspVel / 2;
+	m_wndPreview.m_bee_vel = m_BeeVel / 2;
+	m_wndPreview.Invalidate();
+
+	m_ctrlBeeVel.SetPos(m_BeeVel);
+	m_ctrlWaspVel.SetPos(m_WaspVel);
+
+	m_BeeVelText.Format(_T("%d"), m_BeeVel);
+	m_WaspVelText.Format(_T("%d"), m_WaspVel);
+
+	UpdateData(FALSE);
+}
+
+void CSaverDlg::OnOK()
 {
 	m_bVerifyNumbers = true;
-	
-	CDialog::OnOK();
 
-    m_bVerifyNumbers = false;
+	CDialogEx::OnOK();
+
+	m_bVerifyNumbers = false;
 }

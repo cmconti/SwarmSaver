@@ -1,7 +1,7 @@
 // SwarmWindow.cpp : implementation file
 //
 
-#include "stdafx.h"
+#include "pch.h"
 #include "DrawWnd.h"
 #include "resource.h"
 #include "TGraphics.h"
@@ -150,20 +150,20 @@ void CSwarmWindow::Find95Desktop()
 {
     m_hWndExplorer = ::GetDesktopWindow();
 
-    HWND hProgman = ::FindWindowEx(::GetDesktopWindow(), NULL, "Progman", NULL);
+    HWND hProgman = ::FindWindowEx(::GetDesktopWindow(), NULL, _T("Progman"), NULL);
     if (hProgman != NULL)
     {
-        HWND hShellDLL = ::FindWindowEx(hProgman, NULL, "SHELLDLL_DefView", NULL);
+        HWND hShellDLL = ::FindWindowEx(hProgman, NULL, _T("SHELLDLL_DefView"), NULL);
         if (hShellDLL != NULL)
         {
-            HWND hSysList = ::FindWindowEx(hShellDLL, NULL, "SysListView32", NULL);
+            HWND hSysList = ::FindWindowEx(hShellDLL, NULL, _T("SysListView32"), NULL);
             if (hSysList != NULL)
                 m_hWndExplorer = hSysList;
         }
     }
 }
 
-void CSwarmWindow::OnTimer(UINT nIDEvent) 
+void CSwarmWindow::OnTimer(UINT_PTR nIDEvent)
 {
     if (nIDEvent == m_AnimateID)
     {

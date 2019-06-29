@@ -41,7 +41,7 @@ protected:
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnDestroy();
 	//}}AFX_MSG
 
@@ -60,9 +60,9 @@ private:
     CPen m_BlackPen;
     COLORREF m_BeeColor;
 
-    UINT m_AnimateID;
-    UINT m_ColorID;
-    UINT m_ClearID;
+    UINT_PTR m_AnimateID;
+    UINT_PTR m_ColorID;
+    UINT_PTR m_ClearID;
 
     long m_ClearMS;
 
